@@ -62,8 +62,8 @@ def process_data():
     
     # Iterate over each variable
     for new_col in new_cols:
-        obs = output_dataframe['zip code tabulation area'].nunique()
-        new_vals = np.zeros(obs)
+        num_zip_codes = output_dataframe['zip code tabulation area'].nunique()
+        new_vals = np.zeros(num_zip_codes)
 
         # Calculate change from year prior 
         for year in range(2013, 2020):
