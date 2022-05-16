@@ -16,25 +16,33 @@ def process_data():
 
         year_df = income_query.retrieve_data(
                     year, 'acs/acs5', ['B19013_001E', 'B15003_017E', 'B15003_001E', 
-                    'B25077_001E', 'B25064_001E', 'C02003_003E', 'B01002_001E', 
-                    'B23025_004E'], 'zip%20code%20tabulation%20area', 
-                    'prelim_model')
+                    'B25077_001E', 'B25064_001E', 'C02003_003E', 'C02003_001E', 
+                    'B01002_001E', 'B23025_004E', 'B23025_002E'], 
+                    'zip%20code%20tabulation%20area', 'prelim_model')
         if year_df is None:
             year_df = income_query.retry_retrieval()
         
         year_df = year_df.astype('float')
 
+        # Calculate percent high school graduate
         year_df['perc_hs_grad'] = (year_df['B15003_017E'] /
                                         year_df['B15003_001E'])
-
         year_df = year_df.drop(['B15003_017E', 'B15003_001E'], axis=1)
+
+        # Calculate percent white
+        year_df['perc_white'] = (year_df['C02003_003E'] /
+                                        year_df['C02003_001E'])
+        year_df = year_df.drop(['C02003_003E', 'C02003_001E'], axis=1)
+
+        # Calculate percent employed (of the labor force)
+        year_df['perc_employed'] = (year_df['B23025_004E'] /
+                                        year_df['B23025_002E'])
+        year_df = year_df.drop(['B23025_004E', 'B23025_002E'], axis=1)        
         
         year_df = year_df.rename(columns={'B19013_001E': 'med_income', 
                                     'B25077_001E': 'med_home_val',
                                     'B25064_001E': 'med_rent',
-                                    'C02003_003E': 'perc_white',
-                                    'B01002_001E': 'med_age',
-                                    'B23025_004E': 'perc_employed'})
+                                    'B01002_001E': 'med_age'})
 
         year_df['year'] = year
         output_dataframe = (pd.concat([output_dataframe, year_df], ignore_index=True))
@@ -44,22 +52,31 @@ def process_data():
     output_dataframe.replace(0, method='ffill', inplace=True)
     output_dataframe.replace(-666666666, method='ffill', inplace=True)
 
-    # Add percent change columns
+    # Create new annual change columns
     new_cols = ['med_income_change', 'med_home_val_change', 'med_rent_change', 
-                    'perc_white_change', 'med_age_change', 'perc_employed_change']
-    
+                    'med_age_change', 'perc_white_change', 'perc_hs_grad_change',
+                    'perc_employed_change']
+
     for new_col in new_cols:
         output_dataframe[new_col] = 0
-
+    
     for new_col in new_cols:
         obs = output_dataframe['zip code tabulation area'].nunique()
         new_vals = np.zeros(obs)
+
+        # Iterate over years and append data to array 
         for year in range(2013, 2020):
             year_prior = year - 1
             old_col = new_col[:-7]
             after = output_dataframe[output_dataframe['year'] == year][old_col]
             before = output_dataframe[output_dataframe['year'] == year_prior][old_col]
-            year_vals = (after.to_numpy() - before.to_numpy()) / before.to_numpy()
+
+            # If variable was percentage, subtract the two years, otherwise calc rate of change
+            if old_col[:4] == 'perc':
+                year_vals = after.to_numpy() - before.to_numpy()
+            else:
+                year_vals = (after.to_numpy() - before.to_numpy()) / before.to_numpy()
+
             new_vals = np.append(new_vals, year_vals)
         
         output_dataframe[new_col] = new_vals

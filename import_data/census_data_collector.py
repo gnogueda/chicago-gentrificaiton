@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 
-# Set census state code
+# Set census state code to Illinois
 STATE = 17
 
 class CensusQuery():
@@ -20,7 +20,7 @@ class CensusQuery():
     def retrieve_data(self, year=None, dataset=None, var_lst=None, unit=None,
                     dataset_topic=None):
         '''
-        Method to retrieve data for Michigan from the Census Bureau's API.
+        Method to retrieve data for Illinois from the Census Bureau's API.
 
         Input:
             year : (int) year of data
