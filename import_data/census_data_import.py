@@ -6,7 +6,7 @@ import time
 
 
 def process_data():
-    # Retrieve data from Census Bureau
+    ## Collect data from Census Bureau
     df_cols = ['zip code tabulation area', 'year', 'med_income', 'med_home_val',
                 'med_rent', 'perc_white', 'med_age', 'perc_employed']
     output_dataframe = pd.DataFrame(columns=df_cols)
@@ -48,11 +48,12 @@ def process_data():
         output_dataframe = (pd.concat([output_dataframe, year_df], ignore_index=True))
         time.sleep(2)
 
-    # Clean data (temporary fix for some data input errors I found)
+    ## Clean data input errors I found (temporary fix)
     output_dataframe.replace(0, method='ffill', inplace=True)
     output_dataframe.replace(-666666666, method='ffill', inplace=True)
 
-    # Create new annual change columns
+
+    ## Create new annual change columns
     new_cols = ['med_income_change', 'med_home_val_change', 'med_rent_change', 
                     'med_age_change', 'perc_white_change', 'perc_hs_grad_change',
                     'perc_employed_change']
