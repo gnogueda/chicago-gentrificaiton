@@ -71,7 +71,7 @@ def process_data():
             after = output_dataframe[output_dataframe['year'] == year][old_col]
             before = output_dataframe[output_dataframe['year'] == year_prior][old_col]
 
-            # If variable was percentage, subtract the two years, otherwise calc rate of change
+            # If variable was percentage, calculate difference, otherwise calc rate of change
             if old_col[:4] == 'perc':
                 year_vals = after.to_numpy() - before.to_numpy()
             else:
