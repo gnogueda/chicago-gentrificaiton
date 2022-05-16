@@ -1,5 +1,5 @@
 from hashlib import new
-from census_data_collector import CensusQuery
+from census_API import CensusQuery
 import pandas as pd
 import numpy as np
 import time
