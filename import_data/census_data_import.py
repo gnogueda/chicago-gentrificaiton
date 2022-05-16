@@ -48,7 +48,7 @@ def process_data():
         output_dataframe = (pd.concat([output_dataframe, year_df], ignore_index=True))
         time.sleep(2)
 
-    # Clean data
+    # Clean data (temporary fix for some data input errors I found)
     output_dataframe.replace(0, method='ffill', inplace=True)
     output_dataframe.replace(-666666666, method='ffill', inplace=True)
 
