@@ -60,22 +60,23 @@ def process_data():
     for new_col in new_cols:
         output_dataframe[new_col] = 0
     
+    # Iterate over each variable
     for new_col in new_cols:
         obs = output_dataframe['zip code tabulation area'].nunique()
         new_vals = np.zeros(obs)
 
-        # Iterate over years and append data to array 
+        # Calculate change from year prior 
         for year in range(2013, 2020):
             year_prior = year - 1
             old_col = new_col[:-7]
-            after = output_dataframe[output_dataframe['year'] == year][old_col]
-            before = output_dataframe[output_dataframe['year'] == year_prior][old_col]
+            new = output_dataframe[output_dataframe['year'] == year][old_col]
+            old = output_dataframe[output_dataframe['year'] == year_prior][old_col]
 
             # If variable was percentage, calculate difference, otherwise calc rate of change
             if old_col[:4] == 'perc':
-                year_vals = after.to_numpy() - before.to_numpy()
+                year_vals = new.to_numpy() - old.to_numpy()
             else:
-                year_vals = (after.to_numpy() - before.to_numpy()) / before.to_numpy()
+                year_vals = (new.to_numpy() - old.to_numpy()) / old.to_numpy()
 
             new_vals = np.append(new_vals, year_vals)
         
