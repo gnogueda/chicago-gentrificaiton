@@ -15,8 +15,11 @@ def process_data():
         income_query = CensusQuery()
 
         year_df = income_query.retrieve_data(
-                    year, 'acs/acs5', ['B19013_001E', 'B15003_017E', 'B15003_001E', 
-                    'B25077_001E', 'B25064_001E', 'C02003_003E', 'C02003_001E', 
+                    year, 'acs/acs5', ['B19013_001E', 'B15003_017E', 
+                    'B15003_019E', 'B15003_020E', 'B15003_021E', 
+                    'B15003_022E', 'B15003_023E', 'B15003_024E', 
+                    'B15003_025E', 'B15003_001E', 'B25077_001E', 
+                    'B25064_001E', 'C02003_003E', 'C02003_001E', 
                     'B01002_001E', 'B23025_004E', 'B23025_002E'], 
                     'zip%20code%20tabulation%20area', 'prelim_model')
         if year_df is None:
@@ -25,9 +28,14 @@ def process_data():
         year_df = year_df.astype('float')
 
         # Calculate percent high school graduate
-        year_df['perc_hs_grad'] = (year_df['B15003_017E'] /
+        year_df['perc_hs_grad'] = ((year_df['B15003_017E'] + year_df['B15003_019E'] +
+                                    year_df['B15003_020E'] + year_df['B15003_021E'] +
+                                    year_df['B15003_022E'] + year_df['B15003_023E'] +
+                                    year_df['B15003_024E'] + year_df['B15003_025E'])/
                                         year_df['B15003_001E'])
-        year_df = year_df.drop(['B15003_017E', 'B15003_001E'], axis=1)
+        year_df = year_df.drop(['B15003_017E', 'B15003_019E', 'B15003_020E', 
+                                    'B15003_021E', 'B15003_022E', 'B15003_023E', 
+                                    'B15003_024E', 'B15003_025E','B15003_001E'], axis=1)
 
         # Calculate percent white
         year_df['perc_white'] = (year_df['C02003_003E'] /
