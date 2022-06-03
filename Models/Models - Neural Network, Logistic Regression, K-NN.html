@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Model - Neural network</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Models - Neural Network, Logistic Regression, K-NN</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14500,7 +14500,7 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>&lt;torch._C.Generator at 0x16cbff1ce50&gt;</pre>
+<pre>&lt;torch._C.Generator at 0x2b041dd5430&gt;</pre>
 </div>
 
 </div>
@@ -14667,7 +14667,7 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Full-feature-dataset-training">Full feature dataset training<a class="anchor-link" href="#Full-feature-dataset-training">&#182;</a></h3>
+<h3 id="Neural-network-trained-on-all-13-features">Neural network trained on all 13 features<a class="anchor-link" href="#Neural-network-trained-on-all-13-features">&#182;</a></h3>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
@@ -14876,7 +14876,7 @@ Epoch 125 loss : 0.49053350735355067
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="5-feature-dataset-training">5-feature dataset training<a class="anchor-link" href="#5-feature-dataset-training">&#182;</a></h3>
+<h3 id="Neural-network-trained-on-top-5-features">Neural network trained on top 5 features<a class="anchor-link" href="#Neural-network-trained-on-top-5-features">&#182;</a></h3>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
@@ -15102,6 +15102,17 @@ Epoch 125 loss : 0.485384496885377
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Logistic-regression-trained-on-top-3-features">Logistic regression trained on top 3 features<a class="anchor-link" href="#Logistic-regression-trained-on-top-3-features">&#182;</a></h3>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>For models 2 and 3, logistic regression and K-NN, we chose only to take top 3 most important features (<code>med_rent</code>, <code>college</code>, and <code>violent_crime</code>) to train on.</p>
+
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -15261,12 +15272,6 @@ Epoch 125 loss : 0.485384496885377
 </div>
 </div>
 
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>For K-NN we chose only to take top 3 most important features (<code>med_rent</code>, <code>college</code>, and <code>violent_crime</code>) for implimentation of K-NN model.</p>
-
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -15375,7 +15380,7 @@ Testing accuracy: 0.9047619047619048
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h4 id="Plot-of-decision-boundary-from-logistic-regression-model-above">Plot of decision boundary from logistic regression model above<a class="anchor-link" href="#Plot-of-decision-boundary-from-logistic-regression-model-above">&#182;</a></h4>
+<h4 id="Plot-of-decision-boundary-from-logistic-regression-model-above:">Plot of decision boundary from logistic regression model above:<a class="anchor-link" href="#Plot-of-decision-boundary-from-logistic-regression-model-above:">&#182;</a></h4>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
@@ -15383,7 +15388,7 @@ Testing accuracy: 0.9047619047619048
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[37]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Combine all our data (training and testing) into respective X and Y</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Combine all our data (training and testing) into respective X and Y to display complete distribution</span>
 <span class="n">Y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">y_train_3_feat</span><span class="p">,</span> <span class="n">y_test_3_feat</span><span class="p">])</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X_train_3_feat</span><span class="p">,</span> <span class="n">X_test_3_feat</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
