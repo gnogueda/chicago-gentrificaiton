@@ -1,4 +1,4 @@
-# ML course project - Gentrification in Chicago
+# Machine Learning project - Gentrification in Chicago
 
 * Progress_Report_ML.ipynb: midpoint report.
 * Data collection:
